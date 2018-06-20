@@ -39,4 +39,8 @@ dependencies {
 	//runtime 'mysql:mysql-connector-java'
 	compile("com.h2database:h2")
 
+	//utils
+
+	compile 'info.android15.dint:dint:1.0.3'
+
 }
