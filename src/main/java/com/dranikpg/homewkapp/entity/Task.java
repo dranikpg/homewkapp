@@ -14,8 +14,9 @@ public class Task {
     @Column(name = "id")
     public int id;
 
-    @Column(name = "user")
-    public int user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    public User user;
 
     //date
 
@@ -33,6 +34,9 @@ public class Task {
     @Column(name = "desc")
     public String desc;
 
+    //
+
+
     // garbage
 
     public int getId() {
@@ -43,11 +47,11 @@ public class Task {
         this.id = id;
     }
 
-    public int getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -82,4 +86,6 @@ public class Task {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+
 }

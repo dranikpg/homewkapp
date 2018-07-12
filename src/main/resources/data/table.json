@@ -1,17 +1,17 @@
 {
   "monday":[
-    "PE", "MATHS"
+    "pe", "maths"
   ],
   "tuesday":[
-    "RUSSIAN", "BELRUS"
+    "rus", "brus"
   ],
   "wednesday":[
-    "PHYSICS"
+    "phys"
   ],
   "thursday":[
-    "AP"
+    "ap"
   ],
   "friday":[
-    "RECREATION"
+    "rec"
   ]
 }

@@ -13,5 +13,6 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
 
     public List<Task> findByUser(int user);
 
-    public List<Task> findByExpdGreaterThan(int date);
+    @Query("SELECT t FROM Task t WHERE t.expd >= :date")
+    public List<Task> pending(@Param("date") int date);
 }

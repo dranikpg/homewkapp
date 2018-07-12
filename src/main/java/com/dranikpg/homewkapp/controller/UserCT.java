@@ -2,6 +2,7 @@ package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.entity.User;
 import com.dranikpg.homewkapp.repo.UserRepo;
+import com.dranikpg.homewkapp.service.CacheManager;
 import com.dranikpg.homewkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -48,10 +49,11 @@ public class UserCT {
     public String createUser(@RequestParam(name = "id") String id, @RequestParam(name = "pw") String pw,
                            HttpServletResponse rsp) throws Exception {
 
-        if(urepo.findByNick(id) != null) {
+        if(urepo.findByNick(id).size() > 0) {
             rsp.sendRedirect("/users");
             return "";
         }
+
         User u = new User();
         u.setNick(id);
         u.setName(id+"_name");

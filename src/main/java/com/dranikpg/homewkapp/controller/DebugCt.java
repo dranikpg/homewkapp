@@ -20,18 +20,9 @@ import java.util.List;
 @RestController
 public class DebugCt {
 
-    @GetMapping("/")
-    public String home(){
-        Authentication at = SecurityContextHolder.getContext().getAuthentication();
-        if(at == null) return "NULL";
-        else{
-            return at.getName();
-        }
-    }
-    
+
     @Autowired
     PersistentTokenRepository trepo;
-
 
     @RequestMapping("/token")
     public String token(HttpServletRequest r){

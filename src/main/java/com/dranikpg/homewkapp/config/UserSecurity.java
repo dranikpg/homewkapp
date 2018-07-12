@@ -1,5 +1,6 @@
 package com.dranikpg.homewkapp.config;
 
+import com.dranikpg.homewkapp.handler.AuthSuccessHandler;
 import com.dranikpg.homewkapp.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    AuthSuccessHandler schd;
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,6 +43,7 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .formLogin()
+                .successHandler(schd)
                 .permitAll()
                 .and()
 

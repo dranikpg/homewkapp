@@ -1,7 +1,11 @@
 package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.entity.Task;
+import com.dranikpg.homewkapp.service.CacheManager;
+import com.dranikpg.homewkapp.service.SubjectTableS;
 import com.dranikpg.homewkapp.service.TaskService;
+import com.dranikpg.homewkapp.service.UserService;
+import com.dranikpg.homewkapp.util.rspbase.PdListResponse;
 import dint.Dint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +25,18 @@ public class TaskCT {
     @Autowired
     TaskService ts;
 
+    @Lazy
+    @Autowired
+    CacheManager cm;
+
+    @Lazy
+    @Autowired
+    UserService us;
+
+    @Lazy
+    @Autowired
+    SubjectTableS ss;
+
     @GetMapping("/drop")
     public String drop(HttpServletResponse r) throws IOException {
         ts.drop();
@@ -36,8 +52,8 @@ public class TaskCT {
 
     @GetMapping("/pend")
     @ResponseBody
-    public List<Task> pending(){
-        return ts.pending(Dint.today());
+    public PdListResponse pending(){
+        return new PdListResponse(us.curentUserID(),cm.pendingTasks());
     }
 
     @GetMapping("/my")

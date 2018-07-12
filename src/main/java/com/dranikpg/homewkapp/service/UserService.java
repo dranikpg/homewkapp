@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("us")
 public class UserService implements UserDetailsService  {
 
@@ -19,9 +21,11 @@ public class UserService implements UserDetailsService  {
     @Autowired
     UserRepo ur;
 
+    @Lazy
+    @Autowired
+    CacheManager cm;
 
     //get
-
 
     public User currentUser(){
         Authentication at = SecurityContextHolder.getContext().getAuthentication();
@@ -35,6 +39,17 @@ public class UserService implements UserDetailsService  {
         return u == null ? -1 : u.getId();
     }
 
+    public boolean checkID(int id){
+        return id==curentUserID();
+    }
+
+    public User get(int id){
+        return ur.findById(id);
+    }
+
+    public List<User> all(){
+        return ur.findAll();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
