@@ -16,19 +16,18 @@ class TaskList extends React.Component {
         };
     }
     _onChange() {
-        this.setState({ items: TaskStore.getAllItems() });
+        this.setState({ items: TaskStore.allI() });
         console.log(this.state);
     }
 
     componentWillMount() {
-        TaskStore.addChangeListener(this._onChange.bind(this));
+        TaskStore.change(this._onChange.bind(this));
     }
 
     componentWillUnmount() {
-        TaskStore.removeChangeListener(this._onChange);
+        TaskStore.rmchange(this._onChange);
     }
     render() {
-        console.log("RENDER");
         return (
             <List component="nav">
                 {this.state.items.map((dt) => {

@@ -9,11 +9,9 @@ class TaskStore extends EventEmitter {
 
     constructor() {
         super();
-        // Registers action handler with the Dispatcher.
         Dispatcher.register(this._handle.bind(this));
     }
 
-    // Switches over the action's type when an action is dispatched.
     _handle(action) {
         switch(action.actionType) {
             case AT.ADD_NEW_ITEM:
@@ -22,24 +20,20 @@ class TaskStore extends EventEmitter {
         }
     }
 
-    // Adds a new item to the list and emits a CHANGED event.
     _addNewItem(item) {
         _state.push(item);
         this.emit(CHANGE);
     }
 
-    // Returns the current store's state.
-    getAllItems() {
+    allI() {
         return _state;
     }
 
-    // Hooks a React component's callback to the CHANGED event.
-    addChangeListener(callback) {
+    change(callback) {
         this.on(CHANGE, callback);
     }
 
-    // Removes the listener from the CHANGED event.
-    removeChangeListener(callback) {
+    rmchange(callback) {
         this.removeListener(CHANGE, callback);
     }
 }

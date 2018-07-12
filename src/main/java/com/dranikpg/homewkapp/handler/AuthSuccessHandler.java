@@ -11,6 +11,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.logging.Logger;
 
 @Component
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
@@ -22,17 +25,16 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
 
+        System.out.println("GOOD LOGIN");
+
         //set our response to OK status
         response.setStatus(HttpServletResponse.SC_OK);
 
-        User user = (User) authentication.getPrincipal();
+        Map<String, String[]> a = request.getParameterMap();
+        for(Map.Entry<String,String[]> e: a.entrySet()){
+            System.out.println(e.getKey() + " " + Arrays.toString(e.getValue()));
+        }
 
-        Cookie idC =  new Cookie(
-                "u_id",
-                String.valueOf(user.id));
-
-        response.addCookie(idC);
-
-        response.sendRedirect("/");
+        response.sendRedirect("/api/user");
     }
 }

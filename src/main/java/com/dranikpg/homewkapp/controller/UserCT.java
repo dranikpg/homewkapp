@@ -1,5 +1,6 @@
 package com.dranikpg.homewkapp.controller;
 
+import com.dranikpg.homewkapp.dto.UserDTO;
 import com.dranikpg.homewkapp.entity.User;
 import com.dranikpg.homewkapp.repo.UserRepo;
 import com.dranikpg.homewkapp.service.CacheManager;
@@ -35,7 +36,9 @@ public class UserCT {
 
     @GetMapping("/user")
     public Object user(){
-        return us.currentUser();
+        User u = us.currentUser();
+        if(u == null) return null;
+        return new UserDTO(u);
     }
 
     @GetMapping("/users")

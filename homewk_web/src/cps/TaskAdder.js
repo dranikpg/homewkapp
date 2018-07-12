@@ -28,8 +28,7 @@ class TaskAdder extends React.Component {
                 id="text"
                 label="Text"
                 defaultValue=""
-                onChange={this.eventlst}
-              />
+                onChange={this.eventlst} />
               <Button variant="contained" color="primary" onClick={this.buttonlst}> ADD </Button>
           </div>
           );
