@@ -6,11 +6,10 @@ class ListActions {
    constructor() {
    }
 
-   addNew(item) {
+   load() {
         // Note: This is usually a good place to do API calls.
         Dispatcher.dispatch({
-            actionType: ActionTypes.ADD_NEW_ITEM,
-            payload: item
+            actionType: ActionTypes.LOAD_TS,
         });
     }
 

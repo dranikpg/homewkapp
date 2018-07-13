@@ -6,7 +6,9 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
 import TaskStore from '../stores/TaskStore'
+import TA from '../actions/la'
 
+import DayEntry from "./DayEntry"
 
 class TaskList extends React.Component {
     constructor(props) {
@@ -22,18 +24,24 @@ class TaskList extends React.Component {
 
     componentWillMount() {
         TaskStore.change(this._onChange.bind(this));
+        TA.load();
     }
 
     componentWillUnmount() {
         TaskStore.rmchange(this._onChange);
     }
     render() {
+        let list = [];
+        var i = 0;
+        for(var date in this.state.items){
+          //console.log(this.state.items[date]);
+          list.push(
+              (<DayEntry day={this.state.items[date]}/>)
+          );
+          i++;
+        }
         return (
-            <List component="nav">
-                {this.state.items.map((dt) => {
-                    return (<ListItem> <ListItemText primary={dt}/> </ListItem>);
-                })}
-            </List>
+              <div>{list}</div>
         );
     }
 }
