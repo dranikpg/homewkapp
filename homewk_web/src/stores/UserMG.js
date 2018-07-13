@@ -2,7 +2,7 @@ import { EventEmitter } from 'events';
 import Dispatcher from '../dispatcher';
 import AT from '../actions/const';
 
-import B from '../base/index.js'
+import B from '../base/index.js';
 
 const CHANGE = 'CHANGE';
 let user = {
@@ -26,7 +26,9 @@ class UserMG extends EventEmitter {
             console.log(json);
             if(json.id != undefined){
                 user.id = json.id;
-              }
+                user.nick=json.nick;
+                user.name=json.name;
+            }
             }catch(error){
               console.log(error)
             }

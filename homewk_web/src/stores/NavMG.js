@@ -18,7 +18,11 @@ class NavMG extends EventEmitter {
     }
 
     _handle(action) {
-
+        if(action.actionType == AT.EDIT_VW){
+          this._pushState(S.EDIT);
+        }else if(action.actionType == AT._DEV_BASE){
+          this._pushState(S.BASE);
+        }
     }
 
     _userchange(){
@@ -37,7 +41,7 @@ class NavMG extends EventEmitter {
       return state;
     }
 
-    change(callback) { 
+    change(callback) {
         this.on(CHANGE, callback);
     }
 

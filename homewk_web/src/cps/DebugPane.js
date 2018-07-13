@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
 
 import S from '../base/index'
-
+import A from '../actions/sa'
 
 class DebugPane extends React.Component {
     constructor(props) {
@@ -25,10 +25,16 @@ class DebugPane extends React.Component {
     }
 
 
+    _newitem(){
+        A.newitem();
+    }
+
     render() {
         return (
           <div>
             <Button variant="contained" color="secondary" onClick={this._sendaajax.bind(this)} > AJAX </Button>
+            <Button variant="contained" color="secondary" onClick={this._newitem.bind(this)} > New </Button>
+
           </div>
           );
     }
