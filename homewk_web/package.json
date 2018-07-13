@@ -3,6 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^1.1.0",
+    "material-ui": "^0.20.1",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4"

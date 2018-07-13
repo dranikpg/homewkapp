@@ -1,11 +1,11 @@
 import requests
 import json
 
-baseurl = "http://127.0.0.1:8090/"
+baseurl = "http://127.0.0.1/"
 _s = requests.session();
 
 def get(sub="", pms=None):
-    return _s.get(baseurl + sub, pms)
+    return _s.get(baseurl + sub)
 
 
 def post(sub="",pa=None, da=None):

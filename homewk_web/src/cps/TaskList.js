@@ -36,12 +36,12 @@ class TaskList extends React.Component {
         for(var date in this.state.items){
           //console.log(this.state.items[date]);
           list.push(
-              (<DayEntry day={this.state.items[date]}/>)
+              (<DayEntry date={date} day={this.state.items[date]}/>)
           );
           i++;
         }
         return (
-              <div>{list}</div>
+              <List component="div">{list}</List>
         );
     }
 }
