@@ -61,7 +61,7 @@ class EditMG extends EventEmitter {
       xhr.open("POST", B.BASE_URL+"edit", true);
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhr.send("type=C"+
-          "&subj=maths"+
+          "&subj="+data.subj+
           "&date="+data.date+
           '&desc='+data.desc);
     }

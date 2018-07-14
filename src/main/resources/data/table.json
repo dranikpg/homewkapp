@@ -1,17 +1,11 @@
 {
-  "monday":[
-    "pe", "maths"
-  ],
-  "tuesday":[
-    "rus", "brus"
-  ],
-  "wednesday":[
-    "phys"
-  ],
-  "thursday":[
-    "ap"
-  ],
-  "friday":[
-    "rec"
+  "data":[
+
+  ["maths", "rus", "rus lit"],
+  ["arts", "bel", "bel lit"],
+  ["infa", "physics", "biology"],
+  ["chem", "rus", "rus lit"],
+  ["maths", "music", "rus lit"]
+
   ]
 }

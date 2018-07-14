@@ -2,8 +2,9 @@ package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.service.SubjectTableS;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SubjectTableCT {
@@ -14,7 +15,7 @@ public class SubjectTableCT {
     @RequestMapping("/table")
     @ResponseBody
     public Object table(){
-        return ts.t();
+        return ts.d();
     }
 
 }

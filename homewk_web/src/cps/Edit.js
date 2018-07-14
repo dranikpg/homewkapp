@@ -61,6 +61,7 @@ class Edit extends Component {
       data = EditMG.item();
       orig = {}
       this._copyorig();
+      console.log("Edit mount");
       console.log(data);
   }
 
@@ -88,6 +89,7 @@ class Edit extends Component {
       console.log("TPS call");
       console.log(tdata.date);
       data.date = tdata.date;
+      data.subj = tdata.subj;
       this.setState(
         {
           descc:this.state.descc,
@@ -102,7 +104,7 @@ class Edit extends Component {
       this.setState(
         {
           descc:valid,
-          dsc:this.state.descc,
+          dsc:this.state.dsc,
           s:this.state.s
         }
       )
@@ -130,13 +132,12 @@ class Edit extends Component {
           return (<p>SUCESS</p>)
       }
 
-
-
       return (
         <div style={fullW}>
 
           <DateSubjHeader
-            def={data.date}
+            defs={data.subj}
+            defd={data.date}
             active={data.id==-1}
             cb={this.tscpcall.bind(this)}
               />

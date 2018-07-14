@@ -3,11 +3,9 @@ package com.dranikpg.homewkapp.service;
 import com.dranikpg.homewkapp.util.FileUtil;
 import com.dranikpg.homewkapp.util.SubjectTable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.List;
 
 
 @Service("ss")
@@ -22,6 +20,10 @@ public class SubjectTableS {
     }
 
     public SubjectTable t(){return table;}
+
+    public List<List<String>> d(){
+        return table.data;
+    }
 
     private void loadTable() {
         ObjectMapper mp = new ObjectMapper();

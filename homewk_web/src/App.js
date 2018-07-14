@@ -18,7 +18,7 @@ import Edit from './cps/Edit'
 const fab_style = {
    position: 'fixed',
    bottom: 40,
-   right: 40,
+   right: 60,
 }
 
 class App extends Component {
@@ -50,11 +50,10 @@ class App extends Component {
       if(this.state.s == S.BASE)return this.renderBase();
       else if(this.state.s == S.LOGIN)return this.renderLogin();
       else if(this.state.s == S.EDIT) return this.renderEdit();
-      else{
-          return (
-              <p>{this.state.s}</p>
-          )
+      else if(this.state.s == S.LOAD){
+        return (<p>Проверим ка ваши куки</p>)
       }
+
     }
 
 

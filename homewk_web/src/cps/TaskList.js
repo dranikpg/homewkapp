@@ -53,7 +53,7 @@ class TaskList extends React.Component {
     }
 
     _emptyHeader(){
-      return (<p>Pusto</p>)
+      return (<p>...</p>)
     }
 }
 

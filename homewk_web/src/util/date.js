@@ -18,3 +18,9 @@ export function parsed(datei){
       parseInt(ds)
     )
 }
+
+export function fetchdd(date){
+   if(date == undefined) return 0;
+   let d = date.getDay();
+   return d-1;
+}

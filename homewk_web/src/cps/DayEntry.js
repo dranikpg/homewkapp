@@ -28,7 +28,6 @@ class DayEntry extends Component {
   render(){
       let ar = [];
       for(var key in this.props.day){
-          console.log(key);
           ar.push(
             (<SubjEntry subj={key} data={this.props.day[key]}/>)
           )

@@ -5,7 +5,10 @@ import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class TaskCT {
     @GetMapping("/pend")
     @ResponseBody
     public HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> pending(){
+
         HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> taskM;
         long st = System.currentTimeMillis();
         System.out.println("Rebuilding task map");
@@ -28,16 +32,15 @@ public class TaskCT {
         taskM = new HashMap<>();
         for (Task t : tl) {
             if(t.getUser() == null) continue;
+
             if (!taskM.containsKey(t.expd)) taskM.put(t.expd, new HashMap<>());
-            TaskLRestDTO d = new TaskLRestDTO();
-            d.id = (int)t.id;
-            d.creator_id = t.getUser().id;
-            d.creator_name = t.getUser().name;
-            d.desc = t.desc;
-            d.date = t.expd;
+
+            TaskLRestDTO d = new TaskLRestDTO(t);
+
             if (!taskM.get(t.expd).containsKey(t.subj))
                 taskM.get(t.expd).put(t.subj, new ArrayList<>());
-            taskM.get(t.expd).get(t.subj).add(d);
+
+            taskM.get(t.expd).get(t.subj).add(0,d);
         }
         System.out.println("TOOK " + (System.currentTimeMillis() - st));
         return taskM;
