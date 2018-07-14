@@ -11,8 +11,15 @@ import LoginForm from './cps/LoginForm'
 
 import NavMG from './stores/NavMG'
 import S from './base/appstate'
+import SA from './actions/sa'
 
 import Edit from './cps/Edit'
+
+const fab_style = {
+   position: 'fixed',
+   bottom: 40,
+   right: 40,
+}
 
 class App extends Component {
 
@@ -32,6 +39,12 @@ class App extends Component {
         console.log("APP:: " + this.state.s);
         this.setState({s:NavMG.state()});
     }
+
+    _newItem(){
+        SA.newitem();
+    }
+
+    //
 
     render() {
       if(this.state.s == S.BASE)return this.renderBase();
@@ -60,11 +73,15 @@ class App extends Component {
     renderBase(){
       return (
         <div className="App">
-          <DebugPane/>
           <br/>
-          <TaskAdder msg='HEYHO' />
+          <TaskList />
           <br/>
-          <TaskList msg='AYMAO' > LOL </TaskList>
+          <Button
+            style={fab_style} color="secondary"
+            variant="fab" aria-label="delete"
+            onClick={this._newItem.bind(this)}>
+            <AddIcon />
+          </Button>
         </div>
       );
     }

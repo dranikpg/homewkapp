@@ -5,6 +5,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
+
 import TaskStore from '../stores/TaskStore'
 import TA from '../actions/la'
 
@@ -40,9 +41,19 @@ class TaskList extends React.Component {
           );
           i++;
         }
+
+        let emptymsg =  i == 0 ? this._emptyHeader() : '';
+
         return (
-              <List component="div">{list}</List>
+          <React.Fragment>
+              {emptymsg}
+              <List>{list}</List>
+          </React.Fragment>
         );
+    }
+
+    _emptyHeader(){
+      return (<p>Pusto</p>)
     }
 }
 

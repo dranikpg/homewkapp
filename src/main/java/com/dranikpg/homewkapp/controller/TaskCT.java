@@ -2,76 +2,92 @@ package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.dto.TaskLRestDTO;
 import com.dranikpg.homewkapp.entity.Task;
-import com.dranikpg.homewkapp.service.CacheManager;
-import com.dranikpg.homewkapp.service.SubjectTableS;
 import com.dranikpg.homewkapp.service.TaskService;
-import com.dranikpg.homewkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
 public class TaskCT {
-
     @Lazy
     @Autowired
     TaskService ts;
 
-    @Lazy
-    @Autowired
-    CacheManager cm;
-
-    @Lazy
-    @Autowired
-    UserService us;
-
-    @Lazy
-    @Autowired
-    SubjectTableS ss;
-
-    @GetMapping("/drop")
-    public String drop(HttpServletResponse r) throws IOException {
-        ts.drop();
-        r.sendRedirect("/all");
-        return "";
-    }
-
-    @GetMapping("/all")
-    @ResponseBody
-    public List<Task> all(){
-        return ts.all();
-    }
-
     @GetMapping("/pend")
     @ResponseBody
     public HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> pending(){
-        return cm.pendingTasks();
+        HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> taskM;
+        long st = System.currentTimeMillis();
+        System.out.println("Rebuilding task map");
+        List<Task> tl = ts.fpending();
+        taskM = new HashMap<>();
+        for (Task t : tl) {
+            if(t.getUser() == null) continue;
+            if (!taskM.containsKey(t.expd)) taskM.put(t.expd, new HashMap<>());
+            TaskLRestDTO d = new TaskLRestDTO();
+            d.id = (int)t.id;
+            d.creator_id = t.getUser().id;
+            d.creator_name = t.getUser().name;
+            d.desc = t.desc;
+            d.date = t.expd;
+            if (!taskM.get(t.expd).containsKey(t.subj))
+                taskM.get(t.expd).put(t.subj, new ArrayList<>());
+            taskM.get(t.expd).get(t.subj).add(d);
+        }
+        System.out.println("TOOK " + (System.currentTimeMillis() - st));
+        return taskM;
     }
 
-    @GetMapping("/my")
-    @ResponseBody
-    public List<Task> my(){
-        return ts.ofCurrentUser();
-    }
+    @PostMapping("/edit")
+    public String edit(HttpServletRequest rq){
+        String type = rq.getParameter("type");
 
-    @GetMapping("/task")
-    public String create(@RequestParam(name = "d") int d,
-                         @RequestParam(name = "sub") String sub,
-                         @RequestParam(name = "title") String titile,
-                         HttpServletResponse rsp) throws IOException {
+        System.out.println("Edit request " + type);
 
-        ts.create(d, sub, titile);
-        rsp.sendRedirect("/all");
-        return "";
+        if(type == null) return "F";
+
+        else if(type.equals("C")){
+            try {
+                ts.create(
+                        Integer.parseInt(rq.getParameter("date")),
+                        rq.getParameter("subj"),
+                        rq.getParameter("desc")
+                );
+            }catch (Exception e){
+                e.printStackTrace();
+                return "";
+            }
+            return "OK";
+
+        }else if(type.equals("E")){
+            try{
+                ts.edit(
+                        Integer.parseInt(rq.getParameter("id")),
+                        rq.getParameter("desc")
+                );
+            }catch (Exception e){
+                e.printStackTrace();
+                return "F";
+            }
+            return "OK";
+
+        }else if(type.equals("D")){
+            try{
+                ts.delete(Long.parseLong(rq.getParameter("id")));
+            }catch (Exception e){
+                e.printStackTrace();
+                return "F";
+            }
+            return "OK";
+        }
+
+
+        return "F";
     }
 
 }

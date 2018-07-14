@@ -24,15 +24,7 @@ public class TaskService {
     @Autowired
     TimeService tms;
 
-    @Lazy
-    @Autowired
-    CacheManager cm;
-
     //
-
-    public List<Task> all(){
-        return trepo.findAll();
-    }
 
     public List<Task> pending(int d){
         System.out.println("Looking for greater than " + d);
@@ -43,41 +35,40 @@ public class TaskService {
         return pending(tms.focus());
     }
 
-    //user
-
-    public List<Task> ofUser(int id){
-        return trepo.findByUser(id);
-    }
-
-    //
-
-    public List<Task> ofCurrentUser(){
-        return ofUser(us.curentUserID());
-    }
-
     //edit
 
-    public void create(int d, String sub, String title){
+    public void create(int d,String subj,  String desc){
+        System.out.println("Create :: " + d + " " + subj + " " + desc);
         Task t = new Task();
         t.expd = d;
-        t.subj = sub;
-        t.title = title;
-        t.desc = title;
+        t.desc = desc;
+        t.subj = subj;
         t.user = us.currentUser();
         trepo.saveAndFlush(t);
-        cm.invalidatePending();
     }
 
-    public void drop() {
-        trepo.deleteAll();
-        trepo.flush();
-        cm.invalidatePending();
+    public void edit(long id, String desc){
+        System.out.println("Edit " + id + "  " + desc);
+        Task r = trepo.getOne(id);
+        if(r.getUser().getId() != us.curentUserID())throw new UnsupportedOperationException();
+        if(desc != null)r.setDesc(desc);
+        trepo.saveAndFlush(r);
+    }
+
+    public void delete(long id){
+        System.out.println("Delete " + id);
+        Task t = trepo.getOne(id);
+        System.out.println(t.getUser());
+        if(t.getUser().id == us.curentUserID()) {
+            trepo.deleteById(id);
+        }else{
+            throw new UnsupportedOperationException();
+        }
     }
 
     //dates
 
     public void newDate(){
         System.out.println("NEW DATE");
-        cm.invalidatePending();
     }
 }

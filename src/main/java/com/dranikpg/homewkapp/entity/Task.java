@@ -12,7 +12,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    public int id;
+    public long id;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,9 +28,6 @@ public class Task {
 
     //tings
 
-    @Column(name = "title")
-    public String title;
-
     @Column(name = "desc")
     public String desc;
 
@@ -39,7 +36,7 @@ public class Task {
 
     // garbage
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -71,14 +68,6 @@ public class Task {
         this.expd = expd;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDesc() {
         return desc;
     }
@@ -87,5 +76,14 @@ public class Task {
         this.desc = desc;
     }
 
-
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", user=" + user +
+                ", subj='" + subj + '\'' +
+                ", expd=" + expd +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }

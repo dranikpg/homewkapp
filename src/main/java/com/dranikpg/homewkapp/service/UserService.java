@@ -21,10 +21,6 @@ public class UserService implements UserDetailsService  {
     @Autowired
     UserRepo ur;
 
-    @Lazy
-    @Autowired
-    CacheManager cm;
-
     //get
 
     public User currentUser(){
@@ -54,6 +50,8 @@ public class UserService implements UserDetailsService  {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("Search " + username);
-        return ur.findByNick(username).get(0);
+        List<User> l = ur.findByNick(username);
+        if(l.size() == 0)throw new UsernameNotFoundException("NOT FOUND");
+        else return l.get(0);
     }
 }

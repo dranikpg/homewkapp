@@ -43,7 +43,7 @@ class Entry extends Component {
       return (
         <ListItem dense>
           <ListItemText inset
-            primary={this.props.value.title}
+            primary={this.props.value.desc}
             secondary={cn}
           />
           {editcp}

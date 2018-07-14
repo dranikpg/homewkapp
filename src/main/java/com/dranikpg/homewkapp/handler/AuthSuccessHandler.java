@@ -30,10 +30,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         //set our response to OK status
         response.setStatus(HttpServletResponse.SC_OK);
 
-        Map<String, String[]> a = request.getParameterMap();
-        for(Map.Entry<String,String[]> e: a.entrySet()){
-            System.out.println(e.getKey() + " " + Arrays.toString(e.getValue()));
-        }
 
         response.sendRedirect("/api/user");
     }
