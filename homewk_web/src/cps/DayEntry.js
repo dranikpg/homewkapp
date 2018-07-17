@@ -10,6 +10,9 @@ import Divider from '@material-ui/core/Divider'
 
 import SubjEntry from './SubjEntry'
 
+import TableStore from '../stores/TableStore'
+
+
 import moment from "moment"
 
 class DayEntry extends Component {
@@ -26,11 +29,21 @@ class DayEntry extends Component {
   }
 
   render(){
+
+      let d = moment(this.props.date, "YYYYMMDD").day() - 1;
+
+      let ss = TableStore.getf(d);
       let ar = [];
-      for(var key in this.props.day){
+
+      console.log('DE');
+      console.log(ss);
+      console.log(this.props.day)
+
+      for(var key in ss){
+          if(this.props.day[ss[key]] != undefined)
           ar.push(
-            (<SubjEntry subj={key} data={this.props.day[key]}/>)
-          )
+            (<SubjEntry subj={ss[key]} data={this.props.day[ss[key]]}/>)
+          );
           //ar.push((<Divider/>))
       }
 

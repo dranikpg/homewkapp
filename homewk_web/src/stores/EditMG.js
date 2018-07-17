@@ -53,7 +53,7 @@ class EditMG extends EventEmitter {
     }
 
     __create(data){
-      console.log("EG -> Creating " + data.id);
+      console.log("EG -> Creating " + data.tag?data.tag:0);
       console.log(data);
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -63,7 +63,8 @@ class EditMG extends EventEmitter {
       xhr.send("type=C"+
           "&subj="+data.subj+
           "&date="+data.date+
-          '&desc='+data.desc);
+          '&desc='+data.desc+
+          '&tag='+data.tag);
     }
 
 
@@ -74,7 +75,10 @@ class EditMG extends EventEmitter {
       xhr.onreadystatechange = this._handlersp.bind(this, xhr);
       xhr.open("POST", B.BASE_URL+"edit", true);
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.send("type=E"+"&id="+data.id+'&desc='+data.desc);
+      xhr.send("type=E"+
+      "&id="+data.id+
+      '&desc='+data.desc+
+      "&tag="+0);
     }
 
     _handlersp(xhr){

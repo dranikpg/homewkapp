@@ -8,8 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
 import U from '../stores/UserMG';
-
 import A from '../actions/sa'
+
+import {geticon} from '../util/tagUI'
 
 class Entry extends Component {
 
@@ -42,6 +43,7 @@ class Entry extends Component {
 
       return (
         <ListItem dense>
+          {geticon(this.props.value.tag)}
           <ListItemText inset
             primary={this.props.value.desc}
             secondary={cn}

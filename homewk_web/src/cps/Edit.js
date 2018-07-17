@@ -10,12 +10,25 @@ import BackIcon from '@material-ui/icons/ArrowBack'
 import EditMG from '../stores/EditMG';
 import SA from '../actions/sa'
 
-import DateSubjHeader from '../cps/DateSubjHeader'
-import DescHeader from '../cps/DescHeader'
+import DateSubjHeader from './DateSubjHeader'
+import DescHeader from './DescHeader'
+import TagHeader from './TagHeader'
 
 const fullW = {
      width: '100%'
 };
+
+const delb_s={
+  color:'#e91e63'
+}
+
+const saveb_s={
+  color:'green'
+}
+
+const topHeader_s={
+    marginLeft:'0px'
+}
 
 const btnDiv={
     marginTop:"20px"
@@ -54,7 +67,8 @@ class Edit extends Component {
       this.setState({s:state})
   }
 
-  //
+  // back button
+
 
   componentWillMount(){
       EditMG.change(this._change.bind(this));
@@ -110,6 +124,10 @@ class Edit extends Component {
       )
   }
 
+  tagcall(tag){
+      data.tag = tag;
+  }
+
   updateState(){
     this.setState(
       {
@@ -134,16 +152,20 @@ class Edit extends Component {
 
       return (
         <div style={fullW}>
-
-          <DateSubjHeader
-            defs={data.subj}
-            defd={data.date}
-            active={data.id==-1}
-            cb={this.tscpcall.bind(this)}
-              />
-
+          <div style={topHeader_s}>
+            <DateSubjHeader
+              defs={data.subj}
+              defd={data.date}
+              active={data.id==-1}
+              cb={this.tscpcall.bind(this)}
+                />
+            <br/>
+            <TagHeader
+              cb={this.tagcall.bind(this)}
+              active={data.id == -1}
+              val={data.tag}/>
+          </div>
           <br/>
-
           <DescHeader
            orig={orig.desc}
            desc={data.desc}
@@ -158,15 +180,11 @@ class Edit extends Component {
       )
   }
 
-  _textChange(event, valid){
-  }
-
-
   _actionBTS(){
     let delb = '';
     if(data.id >= 0){
       delb = (
-        <Button color='secondary' onClick={this._delete.bind(this)}>
+        <Button style={delb_s} onClick={this._delete.bind(this)}>
           DELETE
           <DeleteIcon  />
       </Button>)
@@ -177,7 +195,7 @@ class Edit extends Component {
             BACK
             <BackIcon />
         </Button>
-        <Button disabled={!this.complete()} onClick={this._save.bind(this)}>
+        <Button style={saveb_s} disabled={!this.complete()} onClick={this._save.bind(this)}>
             SAVE
             <SaveIcon />
         </Button>

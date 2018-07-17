@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Timer;
-import java.util.TimerTask;
 
 @Service("tms")
 public class TimeService {
@@ -18,7 +17,7 @@ public class TimeService {
     @Autowired
     TaskService ts;
 
-    public volatile int focus = Dint.create(2018,06,13);
+    public volatile int focus = Dint.create(2018,07,13);
 
     public TimeService() {
         shd = new Timer();
@@ -31,12 +30,12 @@ public class TimeService {
     }
 
     private void setup(){
-       /* shd.scheduleAtFixedRate(new TimerTask() {
+        /*shd.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 next();
             }
-        }, 10000L, 10000L);*/
+        }, 1000, 10000L);*/
     }
 
     private int dayOFW(int d){

@@ -8,7 +8,11 @@ import 'react-day-picker/lib/style.css';
 
 import {formatd, parsed, ffd, fetchdd} from '../util/date'
 
-import TableMG from '../stores/TableMG'
+import TableMG from '../stores/TableStore'
+
+const subj_s={
+  paddingLeft:'20px'
+}
 
 class TimeSubjCP extends React.Component {
 
@@ -84,11 +88,14 @@ class TimeSubjCP extends React.Component {
           selectedDays={this.state.day}
           format="YYYYMMDD"
           disabledDays={
-            { daysOfWeek: [0,6] ,
-              after: limit ,
-              before:new Date()}
+            [
+              {after: limit ,
+              before:new Date()},
+              {daysOfWeek: [0,6]}
+            ]
           }
         />
+        <br/><span style={subj_s}>
         <Select
            disabled={!this.props.active||this.state.day==undefined}
            value={this.state.subj}
@@ -100,6 +107,7 @@ class TimeSubjCP extends React.Component {
            >
            {items}
          </Select>
+         </span>
       </div>
     );
   }

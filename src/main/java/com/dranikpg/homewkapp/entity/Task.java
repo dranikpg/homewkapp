@@ -1,7 +1,6 @@
 package com.dranikpg.homewkapp.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "tasks")
@@ -30,6 +29,9 @@ public class Task {
 
     @Column(name = "desc")
     public String desc;
+
+    @Column(name = "tag")
+    public int tag;
 
     //
 
@@ -74,6 +76,14 @@ public class Task {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public int getTag() {
+        return tag;
+    }
+
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 
     @Override

@@ -10,10 +10,12 @@ public class TaskLRestDTO {
         this.desc = t.desc;
         this.date = t.expd;
         this.subj = t.subj;
+        this.tag = t.tag;
     }
     public int id;
     public int creator_id;
     public int date;
+    public int tag;
     public String creator_name;
     public String desc;
     public String subj;

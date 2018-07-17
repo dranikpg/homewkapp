@@ -40,7 +40,7 @@ public class TaskCT {
             if (!taskM.get(t.expd).containsKey(t.subj))
                 taskM.get(t.expd).put(t.subj, new ArrayList<>());
 
-            taskM.get(t.expd).get(t.subj).add(0,d);
+            taskM.get(t.expd).get(t.subj).add(d);
         }
         System.out.println("TOOK " + (System.currentTimeMillis() - st));
         return taskM;
@@ -49,7 +49,6 @@ public class TaskCT {
     @PostMapping("/edit")
     public String edit(HttpServletRequest rq){
         String type = rq.getParameter("type");
-
         System.out.println("Edit request " + type);
 
         if(type == null) return "F";
@@ -59,7 +58,8 @@ public class TaskCT {
                 ts.create(
                         Integer.parseInt(rq.getParameter("date")),
                         rq.getParameter("subj"),
-                        rq.getParameter("desc")
+                        rq.getParameter("desc"),
+                        Integer.parseInt(rq.getParameter("tag"))
                 );
             }catch (Exception e){
                 e.printStackTrace();

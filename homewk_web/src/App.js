@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 
+import { createMuiTheme,withStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -87,4 +89,7 @@ class App extends Component {
 
 }
 
-export default App;
+
+
+
+export default (App);

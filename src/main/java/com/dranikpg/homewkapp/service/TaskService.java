@@ -2,7 +2,6 @@ package com.dranikpg.homewkapp.service;
 
 import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.repo.TaskRepo;
-import dint.Dint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,13 +36,14 @@ public class TaskService {
 
     //edit
 
-    public void create(int d,String subj,  String desc){
+    public void create(int d,String subj,  String desc, int tag){
         System.out.println("Create :: " + d + " " + subj + " " + desc);
         Task t = new Task();
         t.expd = d;
         t.desc = desc;
         t.subj = subj;
         t.user = us.currentUser();
+        t.tag = tag;
         trepo.saveAndFlush(t);
     }
 
