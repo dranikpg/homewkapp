@@ -74,11 +74,12 @@ class TimeSubjCP extends React.Component {
       items.push(<MenuItem value={pos[d]}>{pos[d]}</MenuItem>)
     }
 
-    let limit = new Date;
+    let limit = new Date();
     limit.setDate(limit.getDate() + 21);
 
-    console.log("after")
-    console.log(limit);
+    let st = new Date();
+    st.setDate(st.getDate()+1);
+
 
     return (
 
@@ -90,7 +91,7 @@ class TimeSubjCP extends React.Component {
           disabledDays={
             [
               {after: limit ,
-              before:new Date()},
+              before:st},
               {daysOfWeek: [0,6]}
             ]
           }

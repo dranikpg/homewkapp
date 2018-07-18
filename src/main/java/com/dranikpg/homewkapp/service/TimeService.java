@@ -1,6 +1,7 @@
 package com.dranikpg.homewkapp.service;
 
 import dint.Dint;
+import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ public class TimeService {
     }
 
     public int focus(){
-        System.out.println("FOCUS");
         return focus;
     }
 
@@ -49,7 +49,7 @@ public class TimeService {
     private void next(){
         focus = Dint.addDays(focus,1);
         while (dayOFW(focus) > 4) focus = Dint.addDays(focus,1);
-        System.out.println("NEW FOCUS " + focus);
+        Logger.debug("Focus " + focus);
         ts.newDate();
     }
 

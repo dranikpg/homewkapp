@@ -3,8 +3,10 @@ package com.dranikpg.homewkapp.controller;
 import com.dranikpg.homewkapp.dto.TaskLRestDTO;
 import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.service.TaskService;
+import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,10 +23,10 @@ public class TaskCT {
     @Autowired
     TaskService ts;
 
+    @Secured("ROLE_USER")
     @GetMapping("/pend")
     @ResponseBody
     public HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> pending(){
-
         HashMap<Integer, HashMap<String, ArrayList<TaskLRestDTO>>> taskM;
         long st = System.currentTimeMillis();
         System.out.println("Rebuilding task map");
@@ -32,26 +34,29 @@ public class TaskCT {
         taskM = new HashMap<>();
         for (Task t : tl) {
             if(t.getUser() == null) continue;
-
             if (!taskM.containsKey(t.expd)) taskM.put(t.expd, new HashMap<>());
-
             TaskLRestDTO d = new TaskLRestDTO(t);
-
             if (!taskM.get(t.expd).containsKey(t.subj))
                 taskM.get(t.expd).put(t.subj, new ArrayList<>());
-
             taskM.get(t.expd).get(t.subj).add(d);
         }
         System.out.println("TOOK " + (System.currentTimeMillis() - st));
         return taskM;
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/edit")
     public String edit(HttpServletRequest rq){
+
+        Logger.info("");
+
         String type = rq.getParameter("type");
         System.out.println("Edit request " + type);
 
-        if(type == null) return "F";
+        if(type == null) {
+            Logger.info("No type request");
+            return "F";
+        }
 
         else if(type.equals("C")){
             try {
@@ -62,7 +67,7 @@ public class TaskCT {
                         Integer.parseInt(rq.getParameter("tag"))
                 );
             }catch (Exception e){
-                e.printStackTrace();
+                Logger.error(e);
                 return "";
             }
             return "OK";
@@ -74,7 +79,7 @@ public class TaskCT {
                         rq.getParameter("desc")
                 );
             }catch (Exception e){
-                e.printStackTrace();
+                Logger.error(e);
                 return "F";
             }
             return "OK";
@@ -83,7 +88,7 @@ public class TaskCT {
             try{
                 ts.delete(Long.parseLong(rq.getParameter("id")));
             }catch (Exception e){
-                e.printStackTrace();
+                Logger.error(e);
                 return "F";
             }
             return "OK";

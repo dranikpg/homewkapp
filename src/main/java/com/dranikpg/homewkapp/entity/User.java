@@ -1,12 +1,11 @@
 package com.dranikpg.homewkapp.entity;
 
-import org.hibernate.annotations.Cascade;
+import com.dranikpg.homewkapp.util.Const;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -52,16 +51,27 @@ public class User implements UserDetails {
         this.name = rname;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     //
 
+
+
+    //
+
+    @Transient
+    private List<GrantedAuthority> gtl;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("USER"));
+        if(gtl != null)return gtl;
+        if(nick.equals(Const.VLAD_NICK)) gtl = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_USER"),
+                new SimpleGrantedAuthority("ROLE_ADMIN")
+        );
+        else gtl = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        return gtl;
     }
 
     public String getPassword() {

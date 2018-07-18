@@ -48,5 +48,5 @@ dependencies {
 	//utils
 
 	compile 'info.android15.dint:dint:1.0.3'
-
+	compile 'org.tinylog:tinylog:1.3.5'
 }

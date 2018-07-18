@@ -10,12 +10,13 @@ import TaskList from './cps/TaskList'
 import TaskAdder from './cps/TaskAdder'
 import DebugPane from './cps/DebugPane'
 import LoginForm from './cps/LoginForm'
+import MsgList from './cps/MsgList'
+import Edit from './cps/Edit'
 
 import NavMG from './stores/NavMG'
 import S from './base/appstate'
 import SA from './actions/sa'
 
-import Edit from './cps/Edit'
 
 const fab_style = {
    position: 'fixed',
@@ -74,6 +75,7 @@ class App extends Component {
     renderBase(){
       return (
         <div className="App">
+          <MsgList />
           <br/>
           <TaskList />
           <br/>

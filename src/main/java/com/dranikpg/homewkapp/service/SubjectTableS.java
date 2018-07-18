@@ -13,8 +13,6 @@ public class SubjectTableS {
 
     SubjectTable table;
 
-
-
     public SubjectTableS(){
         loadTable();
     }

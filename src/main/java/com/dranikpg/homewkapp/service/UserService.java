@@ -2,6 +2,7 @@ package com.dranikpg.homewkapp.service;
 
 import com.dranikpg.homewkapp.entity.User;
 import com.dranikpg.homewkapp.repo.UserRepo;
+import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -9,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService  {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Search " + username);
+        Logger.debug("User request " + username);
         List<User> l = ur.findByNick(username);
         if(l.size() == 0)throw new UsernameNotFoundException("NOT FOUND");
         else return l.get(0);
