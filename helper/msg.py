@@ -4,7 +4,7 @@ login("vlad", "pw")
 
 r = post("msg", da={
     "t":"C",
-    "desc":"Kek an message"
+    "desc":"Example of a message, like don't forget that tomorrow is opposite day"
 })
 print(r.text)
 

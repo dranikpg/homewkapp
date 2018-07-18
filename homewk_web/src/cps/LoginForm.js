@@ -62,8 +62,8 @@ class LoginForm extends React.Component {
             <br/>
             <TextField
               error={this.state.err}
-              id="text"
-              label="Text"
+              id="nick"
+              label="nick"
               defaultValue=""
               onChange={this._unick.bind(this)}
               />

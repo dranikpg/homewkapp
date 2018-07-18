@@ -32,7 +32,7 @@ class MsgList extends React.Component{
   }
 
   render(){
-    if(this.state.m == undefined)return (<p></p>);
+    if(this.state.m == undefined || this.state.m.length == 0)return (<p></p>);
 
     let rd = [];
 
