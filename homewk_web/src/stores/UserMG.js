@@ -28,6 +28,7 @@ class UserMG extends EventEmitter {
                 user.id = json.id;
                 user.nick=json.nick;
                 user.name=json.name;
+                user.admin=json.admin;
             }
             }catch(error){
               console.log(error)

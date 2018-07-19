@@ -10,13 +10,13 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    public int id;
+    public long id;
 
     @Column(name="content")
     public String content;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

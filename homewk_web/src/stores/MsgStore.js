@@ -24,21 +24,58 @@ class MsgStore extends EventEmitter{
       }catch(error){
         console.log(error)
       }
-      if(data.length != 0) this.emit(CHANGE);
+      this.emit(CHANGE);
     }
+  }
+
+  _handleeditrsp(xhr){
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      this._loadrq();
+    }
+  }
+
+  _loadrq(){
+    console.log("load req")
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.onreadystatechange = this._handlersp.bind(this, xhr);
+    xhr.open("GET", B.BASE_URL+"/msg", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
   }
 
   _handle(action) {
       // not loaded yet
+      console.log(action);
       if(action.actionType == AT.LOAD_TS && data == undefined){
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.onreadystatechange = this._handlersp.bind(this, xhr);
-        xhr.open("GET", B.BASE_URL+"/msg", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send();
+          this._loadrq();
+      }else if(action.actionType == AT.LOAD_MSG){
+          this._loadrq();
+      }else if(action.actionType == AT.DELETE_MSG){
+          this._deletemsg(action.payload);
+      }else if(action.actionType == AT.CREATE_MSG){
+          this._createmsg(action.payload);
       }
 
+  }
+
+  _createmsg(desc){
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.onreadystatechange = this._handleeditrsp.bind(this, xhr);
+    xhr.open("POST", B.BASE_URL+"/msg", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("t=C&content="+desc);
+  }
+
+  _deletemsg(id){
+    console.log("deleting " + id)
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.onreadystatechange = this._handleeditrsp.bind(this, xhr);
+    xhr.open("POST", B.BASE_URL+"/msg", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("t=R&id="+id);
   }
 
   getAll(){

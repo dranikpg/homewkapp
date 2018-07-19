@@ -54,7 +54,7 @@ class App extends Component {
       else if(this.state.s == S.LOGIN)return this.renderLogin();
       else if(this.state.s == S.EDIT) return this.renderEdit();
       else if(this.state.s == S.LOAD){
-        return (<p>Проверим ка ваши куки</p>)
+        return (<p>M gonna check your coooookies</p>)
       }
 
     }

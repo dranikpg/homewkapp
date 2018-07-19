@@ -184,7 +184,7 @@ class Edit extends Component {
     let delb = '';
     if(data.id >= 0){
       delb = (
-        <Button style={delb_s} onClick={this._delete.bind(this)}>
+        <Button color="secondary" onClick={this._delete.bind(this)}>
           DELETE
           <DeleteIcon  />
       </Button>)
@@ -195,7 +195,7 @@ class Edit extends Component {
             BACK
             <BackIcon />
         </Button>
-        <Button style={saveb_s} disabled={!this.complete()} onClick={this._save.bind(this)}>
+        <Button color="primary" disabled={!this.complete()} onClick={this._save.bind(this)}>
             SAVE
             <SaveIcon />
         </Button>

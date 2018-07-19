@@ -27,11 +27,13 @@ public class Task {
 
     //tings
 
-    @Column(name = "desc")
-    public String desc;
+    @Column(name = "content")
+    public String content;
 
     @Column(name = "tag")
     public int tag;
+
+    public boolean adminedit;
 
     //
 
@@ -70,12 +72,12 @@ public class Task {
         this.expd = expd;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getContent() {
+        return content;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getTag() {
@@ -86,6 +88,14 @@ public class Task {
         this.tag = tag;
     }
 
+    public boolean isAdminedit() {
+        return adminedit;
+    }
+
+    public void setAdminedit(boolean adminedit) {
+        this.adminedit = adminedit;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -93,7 +103,7 @@ public class Task {
                 ", user=" + user +
                 ", subj='" + subj + '\'' +
                 ", expd=" + expd +
-                ", desc='" + desc + '\'' +
+                ", content='" + content + '\'' +
                 '}';
     }
 }

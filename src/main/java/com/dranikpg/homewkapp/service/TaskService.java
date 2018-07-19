@@ -51,18 +51,24 @@ public class TaskService {
         if(us.currentUser() == null) throw new UnsupportedOperationException();
         Task t = new Task();
         t.expd = d;
-        t.desc = desc;
+        t.content = desc;
         t.subj = subj;
         t.user = us.currentUser();
         t.tag = tag;
+        t.adminedit = false;
         trepo.saveAndFlush(t);
     }
 
     public void edit(long id, String desc){
         Logger.debug(userinf() + ": " + id + "  " + desc);
         Task r = trepo.getOne(id);
-        if(!us.checkID(r.user.getId()))throw new UnsupportedOperationException();
-        if(desc != null)r.setDesc(desc);
+        if(!us.checkID( r.getUser().getId()) )throw new UnsupportedOperationException();
+
+        //check admin edit
+        if(us.curentUserID() != r.getUser().getId()) r.setAdminedit(true);
+        else r.setAdminedit(false);
+
+        if(desc != null)r.setContent(desc);
         trepo.saveAndFlush(r);
     }
 
@@ -70,7 +76,7 @@ public class TaskService {
         Logger.debug(userinf() + ": " + id);
         Task t = trepo.getOne(id);
         System.out.println(t.getUser());
-        if(us.checkID(t.user.getId())) {
+        if(us.checkID(t.getUser().getId())) {
             trepo.deleteById(id);
         }else{
             throw new UnsupportedOperationException();

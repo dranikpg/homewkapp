@@ -1,6 +1,5 @@
 package com.dranikpg.homewkapp.entity;
 
-import com.dranikpg.homewkapp.util.Const;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +23,12 @@ public class User implements UserDetails {
 
     @Column(name = "name",nullable = false, unique = true)
     public String name;
+
+    @Column(name = "ac_lock")
+    public boolean locked = false;
+
+    @Column(name = "admin")
+    public boolean admin = false;
 
     private String password;
 
@@ -55,9 +60,17 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    //
+    public boolean isLocked() {
+        return locked;
+    }
 
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 
+    public boolean isAdmin() {
+        return admin;
+    }
 
     //
 
@@ -66,7 +79,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(gtl != null)return gtl;
-        if(nick.equals(Const.VLAD_NICK)) gtl = Arrays.asList(
+        if(admin) gtl = Arrays.asList(
                 new SimpleGrantedAuthority("ROLE_USER"),
                 new SimpleGrantedAuthority("ROLE_ADMIN")
         );
@@ -90,7 +103,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -103,13 +116,16 @@ public class User implements UserDetails {
         return true;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", nick='" + nick + '\'' +
                 ", name='" + name + '\'' +
+                ", locked=" + locked +
                 ", password='" + password + '\'' +
+                ", gtl=" + gtl +
                 '}';
     }
 }

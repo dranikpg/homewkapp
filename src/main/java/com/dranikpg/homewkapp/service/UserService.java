@@ -21,6 +21,7 @@ public class UserService implements UserDetailsService  {
     @Autowired
     UserRepo ur;
 
+
     //get
 
     public User currentUser(){
@@ -35,9 +36,16 @@ public class UserService implements UserDetailsService  {
         return u == null ? -1 : u.getId();
     }
 
-    public boolean checkID(int id){
-        return id==curentUserID();
+    public boolean currentUserBlocked(){
+        return currentUser().isLocked();
     }
+
+    public boolean checkID(int id){
+        return id==curentUserID() || currentUser().isAdmin();
+    }
+
+
+    // gets
 
     public User get(int id){
         return ur.findById(id);
@@ -47,6 +55,12 @@ public class UserService implements UserDetailsService  {
         return ur.findAll();
     }
 
+    public List<User> searchNick(String nick){
+        return ur.findByNick(nick);
+    }
+
+    //lock
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Logger.debug("User request " + username);
@@ -54,4 +68,6 @@ public class UserService implements UserDetailsService  {
         if(l.size() == 0)throw new UsernameNotFoundException("NOT FOUND");
         else return l.get(0);
     }
+
+
 }

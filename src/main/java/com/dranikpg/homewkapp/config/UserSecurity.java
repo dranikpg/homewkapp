@@ -83,4 +83,5 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(6);
     }
 
+
 }

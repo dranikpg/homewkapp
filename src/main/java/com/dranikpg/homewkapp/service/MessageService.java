@@ -24,13 +24,18 @@ public class MessageService {
         return rp.findAll();
     }
 
+    public void drop(){
+        Logger.info("ALL MESSAGE DELETE");
+        rp.deleteAll();
+    }
+
     public Message get(int id){
         return rp.getOne((long) id);
     }
 
-    public void delete(int id){
+    public void delete(long id){
         Logger.debug("" + id);
-        rp.deleteById((long) id);
+        rp.deleteById(id);
     }
 
     public void create(String desc){

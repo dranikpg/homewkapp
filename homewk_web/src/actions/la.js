@@ -1,7 +1,7 @@
 import Dispatcher from '../dispatcher';
 import ActionTypes from './const.js';
 
-class ListActions {
+class LoadActions {
 
    constructor() {
    }
@@ -13,6 +13,12 @@ class ListActions {
         });
     }
 
+    reloadmsg(){
+        Dispatcher.dispatch({
+            actionType: ActionTypes.LOAD_MSG,
+        });
+    }
+
 }
 
-export default new ListActions();
+export default new LoadActions();

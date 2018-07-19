@@ -30,21 +30,24 @@ public class MessageCT {
     @PostMapping("/msg")
     public String edit(HttpServletRequest rq){
         String type = rq.getParameter("t");
+        Logger.debug(type);
         if(type == null) return "F";
-        if(type.equals("D")){
+        if(type.equals("R")){
             try{
-                ms.delete(Integer.parseInt(rq.getParameter("id")));
+                ms.delete(Long.parseLong(rq.getParameter("id")));
             }catch (Exception e){
                 Logger.error(e);
                 return "F";
             }
         }else if(type.equals("C")){
             try{
-                ms.create(rq.getParameter("desc"));
+                ms.create(rq.getParameter("content"));
             }catch (Exception e){
                 Logger.error(e);
                 return "F";
             }
+        }else if(type.equals("D")){
+            ms.drop();
         }
         return "-";
     }

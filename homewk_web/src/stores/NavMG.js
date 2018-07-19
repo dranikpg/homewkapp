@@ -18,6 +18,8 @@ class NavMG extends EventEmitter {
     }
 
     _handle(action) {
+
+          console.log(action);
         if(action.actionType == AT.EDIT_VW){
           this._pushState(S.EDIT);
         }else if(action.actionType == AT._DEV_BASE){

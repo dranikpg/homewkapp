@@ -7,9 +7,10 @@ public class UserDTO {
         this.id = u.id;
         this.nick = u.nick;
         this.name = u.name;
+        this.admin = u.isAdmin();
     }
     public int id;
     public String nick;
     public String name;
-
+    public boolean admin;
 }

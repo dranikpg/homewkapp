@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 public class UserCT {
@@ -31,8 +29,17 @@ public class UserCT {
     @Autowired
     PasswordEncoder enc;
 
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/user/{nick}")
+    @ResponseBody
+    public List<User> userdata(@PathVariable  String nick){
+        return us.searchNick(nick);
+    }
+
+
     @GetMapping("/user")
-    public Object user(){
+    public UserDTO user(){
         User u = us.currentUser();
         if(u == null) return null;
         return new UserDTO(u);
@@ -61,6 +68,7 @@ public class UserCT {
         u.setNick(id);
         u.setName(id+"_name");
         u.setPassword(enc.encode(pw));
+        u.setLocked(false);
         urepo.saveAndFlush(u);
         /* Auto hop
         Authentication auth =

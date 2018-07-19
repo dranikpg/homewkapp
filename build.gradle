@@ -33,16 +33,16 @@ springBoot {
 dependencies {
 	compile "org.springframework.boot:spring-boot-starter"
 	compile "org.springframework.boot:spring-boot-starter-web"
-	compile "org.springframework.boot:spring-boot-starter-thymeleaf"
 
 	compile "org.springframework:spring-jdbc"
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-security'
 
+
 	runtime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	// database
-	//runtime 'mysql:mysql-connector-java'
+	compile 'mysql:mysql-connector-java'
 	compile("com.h2database:h2")
 
 	//utils

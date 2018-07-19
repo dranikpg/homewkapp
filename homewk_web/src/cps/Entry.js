@@ -26,20 +26,23 @@ class Entry extends Component {
   render(){
 
       let cn = this.props.value.creator_name;
-      if(cn == U.user().name) cn = 'YoU'
+      if(cn == U.user().name) cn = 'You'
+      if(this.props.value.adedit) cn+='(AE)';
 
       let editcp = '';
-      if(this.props.value.creator_name == U.user().name){
+      console.log(U.user());
+      if(U.user().admin || this.props.value.creator_id == U.user().id){
         editcp = (
           (
             <React.Fragment>
-                <IconButton onClick={this._openEdit.bind(this)} aria-label="Delete">
+                <IconButton onClick={this._openEdit.bind(this)} aria-label="Edit">
                    <EditIcon />
                 </IconButton>
             </React.Fragment>
           )
         )
       }
+
 
       return (
         <ListItem dense>
