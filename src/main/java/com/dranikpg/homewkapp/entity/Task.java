@@ -27,7 +27,7 @@ public class Task {
 
     //tings
 
-    @Column(name = "content")
+    @Column(name = "content",columnDefinition="TEXT")
     public String content;
 
     @Column(name = "tag")

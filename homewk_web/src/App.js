@@ -12,6 +12,7 @@ import DebugPane from './cps/DebugPane'
 import LoginForm from './cps/LoginForm'
 import MsgList from './cps/MsgList'
 import Edit from './cps/Edit'
+import Footer from './cps/Footer'
 
 import NavMG from './stores/NavMG'
 import S from './base/appstate'
@@ -21,9 +22,7 @@ import SA from './actions/sa'
 const fab_style = {
    position: 'fixed',
    bottom: 40,
-   right: 50,
-   width:40,
-   height:40
+   right: 60,
 }
 
 class App extends Component {
@@ -87,6 +86,7 @@ class App extends Component {
             onClick={this._newItem.bind(this)}>
             <AddIcon />
           </Button>
+          <Footer />
         </div>
       );
     }
