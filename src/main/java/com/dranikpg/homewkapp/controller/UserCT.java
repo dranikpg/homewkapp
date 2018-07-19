@@ -31,6 +31,24 @@ public class UserCT {
 
 
     @Secured("ROLE_ADMIN")
+    @GetMapping("user_flush")
+    public String flushUserData(){
+        us.flushUserChanges();
+
+        List<User> ur = urepo.findAll();
+
+        StringBuilder out = new StringBuilder(ur.size()*40);
+        for(User u:ur){
+            out.append(u.getNick()).append(" ");
+            if(u.getActive() == null)out.append("-");
+            else out.append(u.getActive().toString());
+            out.append("<br/>");
+        }
+
+        return out.toString();
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/user/{nick}")
     @ResponseBody
     public List<User> userdata(@PathVariable  String nick){
@@ -42,6 +60,7 @@ public class UserCT {
     public UserDTO user(){
         User u = us.currentUser();
         if(u == null) return null;
+        us.updateActive(u);
         return new UserDTO(u);
     }
 

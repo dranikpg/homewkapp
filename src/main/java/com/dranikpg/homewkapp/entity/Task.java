@@ -33,6 +33,7 @@ public class Task {
     @Column(name = "tag")
     public int tag;
 
+    @Column(name = "adminedit")
     public boolean adminedit;
 
     //

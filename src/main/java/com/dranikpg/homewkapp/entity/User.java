@@ -5,6 +5,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +32,9 @@ public class User implements UserDetails {
 
     @Column(name = "admin")
     public boolean admin = false;
+
+    @Column(name="lactive")
+    public Timestamp  active;
 
     private String password;
 
@@ -70,6 +76,14 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return admin;
+    }
+
+    public Timestamp getActive() {
+        return active;
+    }
+
+    public void setActive(Timestamp active) {
+        this.active = active;
     }
 
     //
