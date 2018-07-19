@@ -12,7 +12,7 @@ public class Message {
     @Column(name = "id")
     public long id;
 
-    @Column(name="content")
+    @Column(name="content",columnDefinition="TEXT")
     public String content;
 
 

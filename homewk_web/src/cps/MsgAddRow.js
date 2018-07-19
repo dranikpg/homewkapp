@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import SaveIcon from '@material-ui/icons/Save';
+import SendIcon from '@material-ui/icons/Send';
 
 const style={
   'width':'70%'
@@ -43,9 +43,9 @@ class MsgAddRow extends React.Component{
               margin="normal"
               value={this.state.d}
               />
-          <Button color="primary" onClick={this._save.bind(this)}>
-                SAVE
-                <SaveIcon />
+          <Button disabled={this.state.d.length==0} color="primary" onClick={this._save.bind(this)}>
+                Post
+                <SendIcon />
           </Button>
         </React.Fragment>
     )
