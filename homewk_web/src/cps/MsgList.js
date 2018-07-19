@@ -50,9 +50,7 @@ class MsgList extends React.Component{
     return (
       <Paper elevation={2}>
         <List
-          dense
-          subheader=
-            {<ListSubheader component="div">Global messages</ListSubheader>}>
+          dense>
           {rd}
         </List>
         {U.user().admin?

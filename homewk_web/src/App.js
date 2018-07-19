@@ -21,7 +21,9 @@ import SA from './actions/sa'
 const fab_style = {
    position: 'fixed',
    bottom: 40,
-   right: 60,
+   right: 50,
+   width:40,
+   height:40
 }
 
 class App extends Component {
