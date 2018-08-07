@@ -1,9 +1,14 @@
 package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.dto.UserDTO;
+import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.entity.User;
 import com.dranikpg.homewkapp.repo.UserRepo;
+import com.dranikpg.homewkapp.service.TaskService;
 import com.dranikpg.homewkapp.service.UserService;
+import com.dranikpg.homewkapp.util.Util;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,19 +32,24 @@ public class UserCT {
 
     @Lazy
     @Autowired
+    TaskService ts;
+
+    @Lazy
+    @Autowired
     PasswordEncoder enc;
 
 
     @Secured("ROLE_ADMIN")
-    @GetMapping("user_flush")
-    public String flushUserData(){
+    @GetMapping("users")
+    public String users(){
         us.flushUserChanges();
 
         List<User> ur = urepo.findAll();
 
         StringBuilder out = new StringBuilder(ur.size()*40);
         for(User u:ur){
-            out.append(u.getNick()).append(" ");
+            out.append(Util.fixed(""+u.getId(),3));
+            out.append(Util.fixed(u.getNick(),8)).append(" ");
             if(u.getActive() == null)out.append("-");
             else out.append(u.getActive().toString());
             out.append("<br/>");
@@ -51,9 +61,30 @@ public class UserCT {
     @Secured("ROLE_ADMIN")
     @GetMapping("/user/{nick}")
     @ResponseBody
-    public List<User> userdata(@PathVariable  String nick){
-        return us.searchNick(nick);
+    public String userdata(@PathVariable  String nick) throws JsonProcessingException {
+        List<User> ul = us.searchNick(nick);
+        if(ul == null||ul.size() == 0)return "NULL";
+        User u = ul.get(0);
+        ObjectMapper m = new ObjectMapper();
+        return m.writerWithDefaultPrettyPrinter().writeValueAsString(u);
     }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/user_entries/{nick}")
+    @ResponseBody
+    public String userentries(@PathVariable String nick) throws JsonProcessingException {
+        List<User> userlist = us.searchNick(nick);
+        if(userlist == null||userlist.size() == 0)return "NO USER";
+        User u = userlist.get(0);
+
+        List<Task> tasklist = ts.ofUser(u);
+
+        if(tasklist == null)return "NONE";
+
+        ObjectMapper mp = new ObjectMapper();
+        return mp.writerWithDefaultPrettyPrinter().writeValueAsString(tasklist);
+    }
+
 
 
     @GetMapping("/user")
@@ -64,16 +95,7 @@ public class UserCT {
         return new UserDTO(u);
     }
 
-
     @Secured("ROLE_ADMIN")
-    @GetMapping("/users")
-    @ResponseBody
-    public Object users(){
-        Logger.debug("");
-        return urepo.findAll();
-    }
-
-
     @GetMapping("/user/create")
     public String createUser(@RequestParam(name = "id") String id, @RequestParam(name = "pw") String pw,
                            HttpServletResponse rsp) throws Exception {
@@ -89,11 +111,6 @@ public class UserCT {
         u.setPassword(enc.encode(pw));
         u.setLocked(false);
         urepo.saveAndFlush(u);
-        /* Auto hop
-        Authentication auth =
-                new UsernamePasswordAuthenticationToken(u, null, u.getAuthorities());
-        SecurityC
-        ontextHolder.getContext().setAuthentication(auth);*/
         return "OK";
     }
 

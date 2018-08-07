@@ -1,3 +1,3 @@
 export default{
-    BASE_URL:'http://192.168.2.9/api/'
+    BASE_URL:'http://hw.dranikpg.com/api/'
 }

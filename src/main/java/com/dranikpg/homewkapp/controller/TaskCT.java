@@ -1,6 +1,7 @@
 package com.dranikpg.homewkapp.controller;
 
 import com.dranikpg.homewkapp.dto.TaskDTO;
+import com.dranikpg.homewkapp.dto.TaskRDTO;
 import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.service.TaskService;
 import com.dranikpg.homewkapp.service.UserService;
@@ -8,6 +9,7 @@ import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +32,7 @@ public class TaskCT {
     UserService us;
 
     @Secured("ROLE_USER")
+   // @PreAuthorize("#contact.name == authentication.name")
     @GetMapping("/pend")
     @ResponseBody
     public HashMap<Integer, HashMap<String, ArrayList<TaskDTO>>> pending(HttpServletRequest rq){
@@ -52,10 +55,7 @@ public class TaskCT {
 
     @Secured("ROLE_USER")
     @PostMapping("/edit")
-    public String edit(HttpServletRequest rq, HttpServletResponse rp){
-
-
-
+    public String edit(HttpServletRequest rq, TaskRDTO dto){
         Logger.info("");
 
         String type = rq.getParameter("type");
@@ -68,12 +68,7 @@ public class TaskCT {
 
         else if(type.equals("C")){
             try {
-                ts.create(
-                        Integer.parseInt(rq.getParameter("date")),
-                        rq.getParameter("subj"),
-                        rq.getParameter("desc"),
-                        Integer.parseInt(rq.getParameter("tag"))
-                );
+                ts.create(dto);
             }catch (Exception e){
                 Logger.error(e);
                 return "";
@@ -82,10 +77,7 @@ public class TaskCT {
 
         }else if(type.equals("E")){
             try{
-                ts.edit(
-                        Integer.parseInt(rq.getParameter("id")),
-                        rq.getParameter("desc")
-                );
+                ts.edit(dto);
             }catch (Exception e){
                 Logger.error(e);
                 return "F";

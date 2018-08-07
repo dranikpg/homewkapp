@@ -78,7 +78,7 @@ class EditMG extends EventEmitter {
       xhr.send("type=E"+
       "&id="+data.id+
       '&desc='+data.desc+
-      "&tag="+0);
+      "&tag="+data.tag);
     }
 
     _handlersp(xhr){

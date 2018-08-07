@@ -1,5 +1,6 @@
 package com.dranikpg.homewkapp.service;
 
+import com.dranikpg.homewkapp.dto.TaskRDTO;
 import com.dranikpg.homewkapp.entity.Task;
 import com.dranikpg.homewkapp.entity.User;
 import com.dranikpg.homewkapp.repo.TaskRepo;
@@ -27,6 +28,10 @@ public class TaskService {
 
     //
 
+    public List<Task> all(){
+        return trepo.findAll();
+    }
+
     public List<Task> pending(int d){
         System.out.println("Looking for greater than " + d);
         return trepo.pending(d);
@@ -34,6 +39,10 @@ public class TaskService {
 
     public List<Task> fpending(){
         return pending(tms.focus());
+    }
+
+    public List<Task> ofUser(User u){
+        return trepo.findByUser(u.getId());
     }
 
     //debug
@@ -46,29 +55,38 @@ public class TaskService {
 
     //edit
 
-    public void create(int d,String subj,  String desc, int tag){
-        Logger.debug(userinf() + ": " + d + " " + subj + " " + desc);
+    public void deleteOfUser(User u){
+        Logger.info("DELETING ALL TASKS OF " + u + " WITH PERMISSION OF " + userinf());
+        trepo.deleteByUser(u.getId());
+        trepo.flush();
+    }
+
+    public void create(TaskRDTO d){
+        Logger.debug(userinf() + ": " + d.date + " " + d.subj + " " + d.desc);
         if(us.currentUser() == null) throw new UnsupportedOperationException();
         Task t = new Task();
-        t.expd = d;
-        t.content = desc;
-        t.subj = subj;
+        t.expd = d.date;
+        t.content = d.desc;
+        t.subj = d.subj;
         t.user = us.currentUser();
-        t.tag = tag;
+        t.tag = d.tag;
         t.adminedit = false;
         trepo.saveAndFlush(t);
     }
 
-    public void edit(long id, String desc){
-        Logger.debug(userinf() + ": " + id + "  " + desc);
-        Task r = trepo.getOne(id);
+    public void edit(TaskRDTO d){
+        Logger.debug(userinf() + ": " + d.id + "  " + d.desc);
+        Task r = trepo.getOne(d.id);
         if(!us.checkID( r.getUser().getId()) )throw new UnsupportedOperationException();
 
         //check admin edit
         if(us.curentUserID() != r.getUser().getId()) r.setAdminedit(true);
         else r.setAdminedit(false);
 
-        if(desc != null)r.setContent(desc);
+        if(d.desc != null)r.setContent(d.desc);
+        if(d.tag != -1)r.setTag(d.tag);
+        //
+
         trepo.saveAndFlush(r);
     }
 
@@ -83,9 +101,4 @@ public class TaskService {
         }
     }
 
-    //dates
-
-    public void newDate(){
-        System.out.println("NEW DATE");
-    }
 }

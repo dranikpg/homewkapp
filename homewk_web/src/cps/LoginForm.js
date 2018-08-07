@@ -28,6 +28,7 @@ class LoginForm extends React.Component {
 
     _update(){
       console.log("LF -> I back");
+      console.log(UserMG.authed());
        if(!UserMG.authed()){
          this.setState({
            err:true,

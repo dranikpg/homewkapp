@@ -21,24 +21,16 @@ const icon_s={
     marginTop:'20px'
 }
 
-class DescHeader extends React.Component{
+class TagHeader extends React.Component{
   constructor(props){
     super(props);
-    if(this.props.active){
-      this.state = {
-          tag: TagStore.getfor(0)
-      }
-    }else{
       this.state = {
           tag:TagStore.getfor(this.props.val)
       }
-    }
   }
 
   componentWillMount(){
-    if(this.props.active){
       this.props.cb(TagStore.indexof(this.state.tag));
-    }
   }
 
   _handle(event){
@@ -54,7 +46,7 @@ class DescHeader extends React.Component{
   render(){
 
       let ri = TagStore.getAll();
-      let items = []
+      let items = [];
 
       for(var d in ri){
         items.push(<MenuItem value={ri[d]}>{ri[d]}</MenuItem>)
@@ -66,7 +58,6 @@ class DescHeader extends React.Component{
           <div style={div_s}>
             <Select
               style={select_s}
-              disabled={!this.props.active}
               value={this.state.tag}
               onChange={this._handle.bind(this)}
               inputProps={{
@@ -80,4 +71,4 @@ class DescHeader extends React.Component{
 
 }
 
-export default DescHeader;
+export default TagHeader;

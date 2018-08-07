@@ -18,13 +18,6 @@ const fullW = {
      width: '100%'
 };
 
-const delb_s={
-  color:'#e91e63'
-}
-
-const saveb_s={
-  color:'green'
-}
 
 const topHeader_s={
     marginLeft:'0px'
@@ -46,7 +39,8 @@ class Edit extends Component {
     this.state = {
         descc:false,
         dsc:false,
-        s: EditMG.state()
+        s: EditMG.state(),
+        sent:false
     }
   }
 
@@ -56,15 +50,17 @@ class Edit extends Component {
 
   _delete(){
       EditMG.remove();
+      this.setState({s:this.state.state, sent:true})
   }
 
   _save(){
       EditMG.save(data);
+      this.setState({s:this.state.state, sent:true})
   }
 
   _change(){
       let state = EditMG.state();
-      this.setState({s:state})
+      this.setState({s:state, sent:false})
   }
 
   // back button
@@ -108,7 +104,8 @@ class Edit extends Component {
         {
           descc:this.state.descc,
           dsc:valid,
-          s:this.state.s
+          s:this.state.s,
+          sent:this.state.sent
         }
       )
   }
@@ -119,7 +116,8 @@ class Edit extends Component {
         {
           descc:valid,
           dsc:this.state.dsc,
-          s:this.state.s
+          s:this.state.s,
+          sent:this.state.sent
         }
       )
   }
@@ -131,9 +129,10 @@ class Edit extends Component {
   updateState(){
     this.setState(
       {
-        descc:data.desc != undefined && data.desc.length > 0,
-        dsc:data.day != undefined,
-        s:this.state.s
+        descc:data.desc !== undefined && data.desc.length > 0,
+        dsc:data.day !== undefined,
+        s:this.state.s,
+        sent:this.state.sent
       }
     )
   }
@@ -184,7 +183,7 @@ class Edit extends Component {
     let delb = '';
     if(data.id >= 0){
       delb = (
-        <Button color="secondary" onClick={this._delete.bind(this)}>
+        <Button disabled={this.state.sent} color="secondary" onClick={this._delete.bind(this)}>
           DELETE
           <DeleteIcon  />
       </Button>)
@@ -195,7 +194,7 @@ class Edit extends Component {
             BACK
             <BackIcon />
         </Button>
-        <Button color="primary" disabled={!this.complete()} onClick={this._save.bind(this)}>
+        <Button color="primary" disabled={!this.complete() || this.state.sent} onClick={this._save.bind(this)}>
             SAVE
             <SaveIcon />
         </Button>

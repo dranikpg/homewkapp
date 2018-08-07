@@ -39,6 +39,12 @@ public class UserService implements UserDetailsService  {
         return u == null ? -1 : u.getId();
     }
 
+    public String currentUserNick(){
+        User u = currentUser();
+        if(u == null)return "NULL";
+        else return u.getNick();
+    }
+
     public boolean currentUserBlocked(){
         return currentUser().isLocked();
     }

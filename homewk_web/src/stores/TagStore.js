@@ -1,16 +1,15 @@
 
-let data =  ["Homework","Info"]
+let data =  ["Regular Homework","Hard homework","Idiot homework","Info"];
 
 class Tag {
-
 
     indexof(i){
         return data.indexOf(i);
     }
 
     getfor(i){
-        if(i == -1)return undefined;
-        if(i > data.length) return undefined;
+        if(i == -1)return data[0];
+        if(i > data.length) return data[0];
         else return data[i];
     }
 

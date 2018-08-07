@@ -3,6 +3,7 @@ package com.dranikpg.homewkapp.config;
 import com.dranikpg.homewkapp.handler.AuthSuccessHandler;
 import com.dranikpg.homewkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
@@ -46,11 +48,13 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
 
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(100*100*1000)
+                .tokenValiditySeconds(30*24*60*60)
                 .key("key")
                 .alwaysRemember(true)
                 .rememberMeParameter("remember-me")
                 .rememberMeCookieName("session")
+
+
                 .userDetailsService(userDetailsService)
 
                 .and()
@@ -60,7 +64,10 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-        return new InMemoryTokenRepositoryImpl();
+        JdbcTokenRepositoryImpl r = new JdbcTokenRepositoryImpl();
+        r.setDataSource(dataSource);
+        //r.setCreateTableOnStartup(true);
+        return r;
     }
 
     @Override

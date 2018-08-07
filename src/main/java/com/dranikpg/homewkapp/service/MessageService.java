@@ -34,12 +34,12 @@ public class MessageService {
     }
 
     public void delete(long id){
-        Logger.debug("" + id);
+        Logger.debug(us.currentUserNick() + " " + id);
         rp.deleteById(id);
     }
 
     public void create(String desc){
-        Logger.debug("" + desc);
+        Logger.debug(us.currentUserNick()  + " " + desc);
         Message m = new Message();
         m.content = desc;
         rp.saveAndFlush(m);
