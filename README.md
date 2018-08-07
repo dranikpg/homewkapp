@@ -9,6 +9,8 @@ The client-side is written JavaScript(ES6) using React as the main UI framework 
 ![](https://www.essitco.com/wp-content/uploads/2017/05/react.png)
 ![](http://www.codice.cc/wp-content/uploads/2016/09/flux-logo.png)
 
+This was the first project I made with reactJS and Spring Boot. It works stable, though it has some architectural flaws (doesn't use react-router & Spring Expression-Based Access Control). They can be fixed in a timely manner, but I decided to keep the project untouched except for important issues.  
+
 
 ## look
 ![list](https://github.com/DranikProgrammer/homewkapp/blob/master/desc/list.png) 
