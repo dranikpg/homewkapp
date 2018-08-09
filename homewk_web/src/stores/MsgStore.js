@@ -39,7 +39,7 @@ class MsgStore extends EventEmitter{
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.onreadystatechange = this._handlersp.bind(this, xhr);
-    xhr.open("GET", B.BASE_URL+"/msg", true);
+    xhr.open("GET", B.BASE_URL+"msg", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
   }
@@ -63,7 +63,7 @@ class MsgStore extends EventEmitter{
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.onreadystatechange = this._handleeditrsp.bind(this, xhr);
-    xhr.open("POST", B.BASE_URL+"/msg", true);
+    xhr.open("POST", B.BASE_URL+"msg", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("t=C&content="+desc);
   }
@@ -73,7 +73,7 @@ class MsgStore extends EventEmitter{
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.onreadystatechange = this._handleeditrsp.bind(this, xhr);
-    xhr.open("POST", B.BASE_URL+"/msg", true);
+    xhr.open("POST", B.BASE_URL+"msg", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("t=R&id="+id);
   }

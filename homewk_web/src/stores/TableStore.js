@@ -34,7 +34,7 @@ class TableMG extends EventEmitter{
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.onreadystatechange = this._handlersp.bind(this, xhr);
-        xhr.open("GET", B.BASE_URL+"/table", true);
+        xhr.open("GET", B.BASE_URL+"table", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
       }

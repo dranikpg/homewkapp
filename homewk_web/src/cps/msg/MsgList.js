@@ -35,7 +35,7 @@ class MsgList extends React.Component{
   }
 
   componentWillUnmount(){
-    MsgStore.rmchange(this._change);
+     MsgStore.rmchange(this._change);
   }
 
   render(){
