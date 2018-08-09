@@ -9,7 +9,7 @@ import B from '../base'
 const CHANGE = 'CHANGE';
 
 let edit = undefined;
-let state = 'N';
+let state = 'R';
 
 class EditMG extends EventEmitter {
 
@@ -20,15 +20,20 @@ class EditMG extends EventEmitter {
     }
 
     _handle(action) {
-        if(action.actionType == AT.EDIT_VW){
+        if(action.actionType === AT.EDIT){
            edit = action.payload;
-           if(edit == undefined){
+           if(edit === undefined){
               this.reset();
            }
+           this._state('R');
         }
     }
 
     //
+
+    abort(){
+        this._state('R');
+    }
 
     remove(){
         if(edit.id < 0) return;
@@ -38,13 +43,19 @@ class EditMG extends EventEmitter {
             xhr.withCredentials = true;
             xhr.onreadystatechange = this._handlersp.bind(this, xhr);
             xhr.open("POST", B.BASE_URL+"edit", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send("type=D"+"&id="+edit.id);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(JSON.stringify(
+                {
+                    type:"D",
+                    id:edit.id
+                }
+            ))
+
         }
     }
 
     save(data){
-        console.log("Save reqzest");
+        console.log("Save request");
         if(data.id < 0){
           this.__create(data);
         }else{
@@ -59,12 +70,17 @@ class EditMG extends EventEmitter {
       xhr.withCredentials = true;
       xhr.onreadystatechange = this._handlersp.bind(this, xhr);
       xhr.open("POST", B.BASE_URL+"edit", true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.send("type=C"+
-          "&subj="+data.subj+
-          "&date="+data.date+
-          '&desc='+data.desc+
-          '&tag='+data.tag);
+      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.send(
+          JSON.stringify(
+              {type:"C",
+               date:data.date,
+               subj:data.subj,
+               desc:data.desc,
+               tag:data.tag
+              }
+          )
+      );
     }
 
 
@@ -74,11 +90,13 @@ class EditMG extends EventEmitter {
       xhr.withCredentials = true;
       xhr.onreadystatechange = this._handlersp.bind(this, xhr);
       xhr.open("POST", B.BASE_URL+"edit", true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhr.send("type=E"+
-      "&id="+data.id+
-      '&desc='+data.desc+
-      "&tag="+data.tag);
+      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.send(JSON.stringify({
+          type:"E",
+          id:data.id,
+          desc:data.desc,
+          tag:data.tag
+      }));
     }
 
     _handlersp(xhr){
@@ -97,8 +115,7 @@ class EditMG extends EventEmitter {
     reset(){
       edit = {
         id:-1
-      }
-      this._state('N');
+      };
     }
 
     item(){

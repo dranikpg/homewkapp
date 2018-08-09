@@ -9,11 +9,11 @@ import java.util.List;
 
 
 @Service("ss")
-public class SubjectTableS {
+public class SubjectTableService {
 
     SubjectTable table;
 
-    public SubjectTableS(){
+    public SubjectTableService(){
         loadTable();
     }
 

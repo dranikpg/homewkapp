@@ -1,5 +1,6 @@
 import Dispatcher from '../dispatcher';
 import ActionTypes from './const.js';
+import AT from "./const";
 
 class EditActions {
 
@@ -20,6 +21,20 @@ class EditActions {
          payload:desc
      });
    }
+
+    edit(entry){
+        Dispatcher.dispatch({
+            actionType:AT.EDIT,
+            payload:entry
+        });
+    }
+
+    newitem(){
+        Dispatcher.dispatch({
+            actionType:AT.EDIT,
+            payload:undefined
+        });
+    }
 
 }
 

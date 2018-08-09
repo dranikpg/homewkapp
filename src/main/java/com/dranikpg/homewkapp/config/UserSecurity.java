@@ -1,5 +1,6 @@
 package com.dranikpg.homewkapp.config;
 
+import com.dranikpg.homewkapp.handler.AuthFailHandler;
 import com.dranikpg.homewkapp.handler.AuthSuccessHandler;
 import com.dranikpg.homewkapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthSuccessHandler schd;
 
+    @Autowired
+    AuthFailHandler failh;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -41,6 +44,7 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .formLogin()
+                .failureHandler(failh)
                 .successHandler(schd)
                 .permitAll()
                 .and()
@@ -90,5 +94,8 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(6);
     }
 
+
+    @Bean
+    public AuthFailHandler failhd(){return new AuthFailHandler();}
 
 }

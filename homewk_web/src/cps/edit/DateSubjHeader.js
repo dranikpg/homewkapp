@@ -6,9 +6,9 @@ import Select from '@material-ui/core/Select'
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import {formatd, parsed, ffd, fetchdd} from '../util/date'
+import {formatd, parsed, ffd, fetchdd} from '../../util/date'
 
-import TableMG from '../stores/TableStore'
+import TableMG from '../../stores/TableStore'
 
 const subj_s={
   paddingLeft:'20px'

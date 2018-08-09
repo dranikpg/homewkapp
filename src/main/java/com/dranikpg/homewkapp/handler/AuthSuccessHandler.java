@@ -18,7 +18,7 @@ import java.io.IOException;
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
 
-    @Value("${hw.auth.success}")
+    @Value("${hw.auth.redirect}")
     public String sc;
 
 

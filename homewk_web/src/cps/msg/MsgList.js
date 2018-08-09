@@ -10,11 +10,11 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import MessageI from '@material-ui/icons/Message'
 
-import MsgAddRow from '../cps/MsgAddRow'
+import MsgAddRow from './MsgAddRow'
 
-import U from '../stores/UserMG'
-import MsgStore from '../stores/MsgStore'
-import EA from '../actions/ea'
+import U from '../../stores/UserMG'
+import MsgStore from '../../stores/MsgStore'
+import EA from '../../actions/ea'
 
 class MsgList extends React.Component{
   constructor(props){

@@ -9,6 +9,8 @@ let user = {
     id:-1
 };
 
+let called = false;
+
 class UserMG extends EventEmitter {
 
     constructor() {
@@ -20,8 +22,9 @@ class UserMG extends EventEmitter {
 
     _handlersp(xhr){
         if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText)
+          called=true;
           try{
+            console.log(xhr.responseText);
             var json = JSON.parse(xhr.responseText);
             console.log(json);
             if(json.id != undefined){
@@ -56,7 +59,6 @@ class UserMG extends EventEmitter {
     login(name,pw){
         console.log("UM -> Login Running");
         var xhr = new XMLHttpRequest();
-        var usg = this;
         xhr.open("POST", B.BASE_URL+"login", true);
         this._cfgrq(xhr);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -71,6 +73,10 @@ class UserMG extends EventEmitter {
     }
 
     // HP
+
+    called(){
+        return called;
+    }
 
     authed(){
       return user.id != -1;

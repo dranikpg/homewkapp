@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import '../tags.css'
+import '../css/tags.css'
 
 import InfoI from '@material-ui/icons/Info';
 import HomeWKI from '@material-ui/icons/LibraryBooks';

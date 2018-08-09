@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 
-import TableStore from '../stores/TableStore'
-import TaskStore from '../stores/TaskStore'
-import TA from '../actions/la'
-import SA from '../actions/sa'
+import TableStore from '../../stores/TableStore'
+import TaskStore from '../../stores/TaskStore'
+import TA from '../../actions/la'
 
 import DayEntry from "./DayEntry"
 

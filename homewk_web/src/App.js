@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-
-import { createMuiTheme,withStyles } from '@material-ui/core/styles';
-
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-import TaskList from './cps/TaskList'
-import TaskAdder from './cps/TaskAdder'
-import DebugPane from './cps/DebugPane'
-import LoginForm from './cps/LoginForm'
-import MsgList from './cps/MsgList'
-import Edit from './cps/Edit'
-import Footer from './cps/Footer'
+import {Switch, Route } from 'react-router-dom';
 
-import NavMG from './stores/NavMG'
-import S from './base/appstate'
-import SA from './actions/sa'
+import TaskList from './cps/tlist/TaskList'
+import LoginForm from './cps/LoginForm'
+import MsgList from './cps/msg/MsgList'
+import Edit from './cps/edit/Edit'
+import Footer from './cps/Footer'
+import StatTestCP from './cps/stat/StatTestCP'
+
+import UserMG from './stores/UserMG'
+import EA from './actions/ea'
+
+import { withRouter } from 'react-router'
+import StatRootCP from "./cps/stat/StatRootCP";
 
 
 const fab_style = {
@@ -29,48 +28,32 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-          s: NavMG.state()
-        }
-    }
 
-    componentWillMount() {
-       NavMG.change(this._stateChange.bind(this));
-    }
-
-
-    _stateChange(){
-        console.log("APP:: " + this.state.s);
-        this.setState({s:NavMG.state()});
     }
 
     _newItem(){
-        SA.newitem();
+        EA.newitem();
+        const { history: { push } } = this.props;
+        push("edit");
+    }
+
+    componentWillMount() {
+        if(!UserMG.authed()) {
+            this.props.history.push("/login");
+        }
     }
 
     //
 
-    render() {
-      if(this.state.s == S.BASE)return this.renderBase();
-      else if(this.state.s == S.LOGIN)return this.renderLogin();
-      else if(this.state.s == S.EDIT) return this.renderEdit();
-      else if(this.state.s == S.LOAD){
-        return (<p>M gonna check your coooookies</p>)
-      }
-
-    }
-
-
-    renderEdit(){
-        return(
-          <Edit />
-        )
-    }
-
-    renderLogin(){
-        return (
-          <LoginForm />
-        )
+    render(){
+      return(
+          <Switch>
+            <Route path='/stat' component={StatRootCP} />
+            <Route path='/login' component={LoginForm} />
+            <Route path='/edit' component={Edit} />
+            <Route path='/' children={this.renderBase()} />
+          </Switch>
+      );
     }
 
     renderBase(){
@@ -96,4 +79,4 @@ class App extends Component {
 
 
 
-export default (App);
+export default withRouter(App);

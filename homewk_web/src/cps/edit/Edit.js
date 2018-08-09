@@ -7,8 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import BackIcon from '@material-ui/icons/ArrowBack'
 
-import EditMG from '../stores/EditMG';
-import SA from '../actions/sa'
+import EditMG from '../../stores/EditMG';
 
 import DateSubjHeader from './DateSubjHeader'
 import DescHeader from './DescHeader'
@@ -21,11 +20,11 @@ const fullW = {
 
 const topHeader_s={
     marginLeft:'0px'
-}
+};
 
 const btnDiv={
     marginTop:"20px"
-}
+};
 
 //central data storage
 let data = {};
@@ -39,13 +38,20 @@ class Edit extends Component {
     this.state = {
         descc:false,
         dsc:false,
+        tag:false,
         s: EditMG.state(),
         sent:false
     }
   }
 
+
   _return(){
-      SA._DEV_base();
+      this.props.history.goBack();
+  }
+
+  _abort(){
+      EditMG.abort();
+      this._return();
   }
 
   _delete(){
@@ -69,7 +75,7 @@ class Edit extends Component {
   componentWillMount(){
       EditMG.change(this._change.bind(this));
       data = EditMG.item();
-      orig = {}
+      orig = {};
       this._copyorig();
       console.log("Edit mount");
       console.log(data);
@@ -91,8 +97,8 @@ class Edit extends Component {
   }
 
   complete(){
-     if(data.id < 0) return this.state.dsc && this.state.descc;
-     else return this.state.descc;
+     if(data.id < 0) return this.state.dsc && this.state.descc&& this.state.tag;
+     else return this.state.descc || this.state.tag;
   }
 
   tscpcall(tdata, valid){
@@ -104,6 +110,7 @@ class Edit extends Component {
         {
           descc:this.state.descc,
           dsc:valid,
+          tag:this.state.tag,
           s:this.state.s,
           sent:this.state.sent
         }
@@ -114,28 +121,29 @@ class Edit extends Component {
       data.desc = desc;
       this.setState(
         {
-          descc:valid,
-          dsc:this.state.dsc,
-          s:this.state.s,
-          sent:this.state.sent
+           descc:valid,
+           dsc:this.state.dsc,
+           tag:this.state.tag,
+           s:this.state.s,
+           sent:this.state.sent
         }
       )
   }
 
-  tagcall(tag){
+  tagcall(tag, valid){
       data.tag = tag;
+      this.setState(
+          {
+              descc:this.state.descc,
+              dsc:this.state.dsc,
+              tag:valid,
+              s:this.state.s,
+              sent:this.state.sent
+          }
+      )
   }
 
-  updateState(){
-    this.setState(
-      {
-        descc:data.desc !== undefined && data.desc.length > 0,
-        dsc:data.day !== undefined,
-        s:this.state.s,
-        sent:this.state.sent
-      }
-    )
-  }
+
 
   //
 
@@ -161,7 +169,6 @@ class Edit extends Component {
             <br/>
             <TagHeader
               cb={this.tagcall.bind(this)}
-              active={data.id == -1}
               val={data.tag}/>
           </div>
           <br/>
@@ -190,7 +197,7 @@ class Edit extends Component {
     }
     return (
       <div style={btnDiv}>
-        <Button onClick={this._return.bind(this)}>
+        <Button onClick={this._abort.bind(this)}>
             BACK
             <BackIcon />
         </Button>

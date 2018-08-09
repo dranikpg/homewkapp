@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,10 +52,10 @@ public class TaskCT {
 
     @Secured("ROLE_USER")
     @PostMapping("/edit")
-    public String edit(HttpServletRequest rq, TaskRDTO dto){
+    public String edit( @RequestBody TaskRDTO dto){
         Logger.info("");
 
-        String type = rq.getParameter("type");
+        String type = dto.getType();
         System.out.println("Edit request " + type);
 
         if(type == null) {
@@ -66,7 +63,9 @@ public class TaskCT {
             return "F";
         }
 
-        else if(type.equals("C")){
+        System.out.println(dto.toString());
+
+        if(type.equals("C")){
             try {
                 ts.create(dto);
             }catch (Exception e){
@@ -86,7 +85,7 @@ public class TaskCT {
 
         }else if(type.equals("D")){
             try{
-                ts.delete(Long.parseLong(rq.getParameter("id")));
+                ts.delete(dto.id);
             }catch (Exception e){
                 Logger.error(e);
                 return "F";

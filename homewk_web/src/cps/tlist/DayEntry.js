@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider'
 
 import SubjEntry from './SubjEntry'
 
-import TableStore from '../stores/TableStore'
+import TableStore from '../../stores/TableStore'
 
 
 import moment from "moment"
@@ -19,13 +19,7 @@ class DayEntry extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      open:true
-    }
-  }
 
-  handleClick(){
-      this.setState({open:!this.state.open})
   }
 
   render(){
@@ -51,19 +45,16 @@ class DayEntry extends Component {
 
       return (
         <React.Fragment>
-          <ListItem button onClick={this.handleClick.bind(this)}>
+          <ListItem>
             <ListItemText
               primary={datetext}
               primaryTypographyProps={{ variant: 'subheading' }}
              />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Divider/>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {ar}
+                {ar}
             </List>
-          </Collapse>
         </React.Fragment>
       )
   }

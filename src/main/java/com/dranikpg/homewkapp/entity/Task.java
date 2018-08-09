@@ -1,5 +1,7 @@
 package com.dranikpg.homewkapp.entity;
 
+import dint.Dint;
+
 import javax.persistence.*;
 
 @Entity
@@ -37,6 +39,10 @@ public class Task {
     public boolean adminedit;
 
     //
+
+    public boolean isUserCredit(){
+        return !isAdminedit(); //&& Dint.today() > getExpd();
+    }
 
 
     // garbage

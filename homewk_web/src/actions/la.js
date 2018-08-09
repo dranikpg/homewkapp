@@ -6,18 +6,26 @@ class LoadActions {
    constructor() {
    }
 
+   loadstat(){
+       Dispatcher.dispatch(
+           {
+               actionType:ActionTypes.LOAD_STAT
+           }
+       )
+   }
+
    load() {
         // Note: This is usually a good place to do API calls.
         Dispatcher.dispatch({
             actionType: ActionTypes.LOAD_TS,
         });
-    }
+   }
 
-    reloadmsg(){
-        Dispatcher.dispatch({
-            actionType: ActionTypes.LOAD_MSG,
-        });
-    }
+   reloadmsg(){
+       Dispatcher.dispatch({
+           actionType: ActionTypes.LOAD_MSG,
+       });
+   }
 
 }
 

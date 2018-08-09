@@ -3,40 +3,36 @@ import React, { Component } from 'react';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
-import TagStore from '../stores/TagStore'
-import {geticon} from '../util/tagUI'
+import TagStore from '../../stores/TagStore'
+import {geticon} from '../../util/tagUI'
 
-const select_s = {
-    width:'50%',
-}
+import '../../css/tagheader.css'
 
 
-const div_s={
-    width:'80%',
-    paddingLeft:'20px'
-}
 
 const icon_s={
     paddingLeft:'20px',
     marginTop:'20px'
-}
+};
 
 class TagHeader extends React.Component{
+
   constructor(props){
     super(props);
-      this.state = {
-          tag:TagStore.getfor(this.props.val)
-      }
-  }
-
-  componentWillMount(){
-      this.props.cb(TagStore.indexof(this.state.tag));
+    this.start = this.props.val;
+    this.state = {
+        tag:TagStore.getfor(this.props.val)
+    }
   }
 
   _handle(event){
       let newv = event.target.value;
 
-      this.props.cb(TagStore.indexof(newv));
+      let id = TagStore.indexof(newv);
+
+      console.log("start " + this.start + " now " + id);
+
+      this.props.cb(id, id!==this.start);
 
       this.setState({
         tag: newv
@@ -55,9 +51,9 @@ class TagHeader extends React.Component{
       let icon = geticon(TagStore.indexof(this.state.tag));
 
       return (
-          <div style={div_s}>
+          <div className="taghd_div">
             <Select
-              style={select_s}
+              className="taghd_select"
               value={this.state.tag}
               onChange={this._handle.bind(this)}
               inputProps={{

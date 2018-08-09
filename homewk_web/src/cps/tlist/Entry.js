@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
-import U from '../stores/UserMG';
-import A from '../actions/sa'
+import U from '../../stores/UserMG';
+import A from '../../actions/ea';
 
-import {geticon} from '../util/tagUI'
+import { withRouter } from 'react-router'
+
+import {geticon} from '../../util/tagUI'
 
 class Entry extends Component {
 
@@ -19,14 +20,16 @@ class Entry extends Component {
   }
 
   _openEdit(){
-      A.edit(this.props.value)
+      A.edit(this.props.value);
+      const { history: { push } } = this.props;
+      push("edit");
   }
 
 
   render(){
 
       let cn = this.props.value.creator_name;
-      if(cn == U.user().name) cn = 'You'
+      if(cn == U.user().name) cn = 'You';
       if(this.props.value.adedit) cn+='(AE)';
 
       let editcp = '';
@@ -58,4 +61,4 @@ class Entry extends Component {
 
 }
 
-export default Entry;
+export default withRouter(Entry);
